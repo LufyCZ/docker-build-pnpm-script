@@ -1,6 +1,8 @@
 FROM gplane/pnpm:node16-alpine
+WORKDIR /workdir
 
 COPY . .
+COPY ./repo ./repo
 RUN pnpm install
 
 WORKDIR /workdir/repo
