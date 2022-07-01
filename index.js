@@ -5,10 +5,7 @@ const process = require("node:process");
 async function runScript() {
   return new Promise((resolve, reject) => {
     const script = childProcess.fork(
-      `./repo/${process.env.SCRIPT_PATH}/dist/index.js`,
-      {
-        silent: true,
-      }
+      `./repo/${process.env.SCRIPT_PATH}/dist/index.js`
     );
 
     // listen for errors as they may prevent the exit event from firing
