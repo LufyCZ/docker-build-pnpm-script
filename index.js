@@ -29,7 +29,7 @@ const app = express();
 app.get("/", async (req, res) => {
   try {
     await runScript();
-    res.status(200);
+    res.sendStatus(200);
   } catch (err) {
     res.status(500).send(err);
   }
