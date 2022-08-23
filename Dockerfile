@@ -5,10 +5,9 @@ WORKDIR /workdir
 
 COPY . .
 RUN pnpm install
-RUN pnpm exec turbo run build --filter=./$SCRIPT_PATH
 
 WORKDIR /workdir/repo
-RUN pnpm install
+RUN pnpm install && pnpm exec turbo run build --filter=./$SCRIPT_PATH
 
 WORKDIR /workdir/repo/$SCRIPT_PATH
 RUN pnpm generate && pnpm build
