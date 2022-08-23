@@ -1,12 +1,12 @@
 FROM gplane/pnpm:node16-alpine
+ARG SCRIPT_PATH="./"
+ENV SCRIPT_PATH ${SCRIPT_PATH}
 WORKDIR /workdir
 
 COPY . .
-RUN pnpm install
+RUN pnpm install && pnpm exec turbo run build --filter="./$SCRIPT_PATH"
 
 WORKDIR /workdir/repo
-ARG SCRIPT_PATH="./"
-ENV SCRIPT_PATH ${SCRIPT_PATH}
 RUN pnpm install
 
 WORKDIR /workdir/repo/$SCRIPT_PATH
