@@ -4,7 +4,8 @@ ENV SCRIPT_PATH ${SCRIPT_PATH}
 WORKDIR /workdir
 
 COPY . .
-RUN pnpm install && pnpm exec turbo run build --filter="./$SCRIPT_PATH"
+RUN pnpm install
+RUN pnpm exec turbo run build --filter=./$SCRIPT_PATH
 
 WORKDIR /workdir/repo
 RUN pnpm install
