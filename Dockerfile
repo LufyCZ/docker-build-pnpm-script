@@ -1,19 +1,19 @@
-FROM gplane/pnpm:node16-alpine
+FROM node:16-alpine
+
 ARG SCRIPT_PATH="./"
 ENV SCRIPT_PATH ${SCRIPT_PATH}
+
+# Install git and pnpm
+RUN apk add --no-cache git
+RUN npm install -g pnpm
+
 WORKDIR /workdir
 
 COPY . .
-RUN pnpm install
 
 WORKDIR /workdir/repo
-RUN pnpm install
+RUN HUSKY=0 pnpm install
 RUN pnpm exec turbo run build --filter="./$SCRIPT_PATH"
 
-WORKDIR /workdir/repo/$SCRIPT_PATH
-RUN pnpm generate && pnpm build
-
-WORKDIR /workdir
-
 EXPOSE 8080/tcp
-CMD ["node", "index.js"]
+CMD pnpm exec turbo run server --only --filter="./$SCRIPT_PATH"
