@@ -12,9 +12,11 @@ COPY . .
 
 # Prune unneeded packages
 # Need to pull the package name from the path
-RUN turbo prune --out-dir=../out --scope=$(pnpm list --depth -1 --parseable --long --filter "./$SCRIPT_PATH" | grep -oP '(?<=\:)(.*(?=@))') 
+RUN turbo prune --out-dir=../pruned --scope=$(pnpm list --depth -1 --parseable --long --filter "./$SCRIPT_PATH" | grep -oP '(?<=\:)(.*(?=@))') 
 
-WORKDIR /workdir/out
+WORKDIR /workdir/pruned
+# Can delete the previous workdir, won't be needed anymore
+RUN rm -rf /workdir/repo
 
 RUN HUSKY=0 pnpm install
 RUN pnpm exec turbo run build --filter="./$SCRIPT_PATH"
