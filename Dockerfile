@@ -13,5 +13,8 @@ COPY . .
 RUN HUSKY=0 pnpm install
 RUN pnpm exec turbo run build --filter="./$SCRIPT_PATH"
 
+# Delete store path since it's now unneeded
+RUN rm -rf $(pnpm store path)
+
 EXPOSE 8080/tcp
 CMD pnpm exec turbo run server --only --filter="./$SCRIPT_PATH"
