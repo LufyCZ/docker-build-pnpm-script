@@ -4,7 +4,7 @@ ARG SCRIPT_PATH="./"
 ENV SCRIPT_PATH ${SCRIPT_PATH}
 
 # Install git and pnpm
-# RUN apk add --no-cache git libc6-compat
+RUN apk add --no-cache git libc6-compat
 RUN npm install -g pnpm
 
 WORKDIR /workdir
