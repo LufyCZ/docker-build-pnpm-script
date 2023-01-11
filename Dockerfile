@@ -10,7 +10,7 @@ RUN npm install -g pnpm
 WORKDIR /workdir
 COPY . .
 
-RUN HUSKY=0 pnpm install --filter="./$SCRIPT_PATH"
+RUN HUSKY=0 pnpm install
 RUN pnpm exec turbo run build --filter="./$SCRIPT_PATH"
 
 EXPOSE 8080/tcp
