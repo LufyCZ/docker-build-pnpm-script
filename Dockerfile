@@ -7,7 +7,7 @@ ENV SCRIPT_PATH ${SCRIPT_PATH}
 # RUN apk add --no-cache git libc6-compat
 RUN npm install -g pnpm
 
-WORKDIR /workdir
+#WORKDIR /workdir
 
 RUN HUSKY=0 pnpm install
 RUN pnpm exec turbo run build --filter="./$SCRIPT_PATH"
