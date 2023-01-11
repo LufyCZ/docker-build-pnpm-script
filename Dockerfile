@@ -7,8 +7,14 @@ ENV SCRIPT_PATH ${SCRIPT_PATH}
 RUN apk add --no-cache git libc6-compat
 RUN npm install -g pnpm
 
-WORKDIR /workdir
+WORKDIR /workdir/repo
 COPY . .
+
+# Prune unneeded packages
+# Need to pull the package name from the path
+RUN turbo prune --out-dir=../out --scope=$(pnpm list --depth -1 --parseable --long --filter "./$SCRIPT_PATH" | grep -oP '(?<=\:)(.*(?=@))') 
+
+WORKDIR /workdir/out
 
 RUN HUSKY=0 pnpm install
 RUN pnpm exec turbo run build --filter="./$SCRIPT_PATH"
