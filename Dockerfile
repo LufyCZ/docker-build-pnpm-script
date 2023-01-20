@@ -7,6 +7,8 @@ ENV SCRIPT_PATH ${SCRIPT_PATH}
 RUN apk add --no-cache git libc6-compat grep
 RUN npm install -g pnpm@7.18.2 turbo
 
+RUN echo $TURBO_TOKEN
+
 WORKDIR /workdir/repo
 COPY . .
 
