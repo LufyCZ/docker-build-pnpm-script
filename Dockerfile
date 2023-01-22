@@ -1,17 +1,17 @@
 FROM node:16-alpine
 
+# Install git and pnpm
+RUN apk add --no-cache git libc6-compat grep
+RUN npm install -g pnpm@7.18.2 turbo
+
+# Do ARG stuff
 ARG SCRIPT_PATH="./"
 ENV SCRIPT_PATH ${SCRIPT_PATH}
 
 ARG TURBO_TOKEN
 ARG TURBO_TEAM
 
-# Install git and pnpm
-RUN apk add --no-cache git libc6-compat grep
-RUN npm install -g pnpm@7.18.2 turbo
-
-RUN echo $TURBO_TOKEN
-
+# Copy the repo into the build context
 WORKDIR /workdir/repo
 COPY . .
 
@@ -26,7 +26,7 @@ RUN rm -rf /workdir/repo
 RUN HUSKY=0 pnpm install
 RUN pnpm exec turbo run build --filter="./$SCRIPT_PATH"
 
-# Delete store path since it's now unneeded
+# Delete store path since it's now unneeded, to reduce image size
 RUN rm -rf $(pnpm store path)
 
 EXPOSE 8080/tcp
