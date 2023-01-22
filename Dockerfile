@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16-alpine@sha256:058dbdf1bf2945e4814a41ce0a30959ba6f72952ad93bcd8340c47bcc12b9f27
 
 # Install git and pnpm
 RUN apk add --no-cache git libc6-compat grep
